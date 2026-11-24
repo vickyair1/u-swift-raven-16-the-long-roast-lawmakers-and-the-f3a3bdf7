@@ -1,18 +1,25 @@
-"""The Long Roast entrypoint: emit one satirical sentence about lawmakers
-who regulate AI but cannot convert a file to PDF."""
+"""The Long Roast — Lawmakers (make.fun bounty).
 
-import os
+A deterministic one-liner roast: a senator who wrote the bill to ban AI
+from writing laws had his own bill written by AI, and it passed
+unanimously because nobody read it.
 
-LINE = "The senator writing the law that tells artificial intelligence what it is allowed to think just emailed his intern the bill as a .docx and asked her to turn it into a PDF for him."
+Writes exactly one line (no trailing newline) to /output/entry.txt
+and prints it to stdout. Stdlib only, deterministic.
+"""
+
+LINE = "The senator who wrote the bill to ban AI from writing laws had his own bill written by AI, and it passed unanimously because nobody read it."
 
 OUTPUT_PATH = "/output/entry.txt"
 
 
-def main():
+def main() -> None:
+    assert 1 <= len(LINE) <= 200, "line must be 1-200 characters"
+    assert "\n" not in LINE and "\r" not in LINE, "line must be a single line"
+    assert LINE == LINE.strip(), "line must have no leading/trailing whitespace"
+    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
+        f.write(LINE)
     print(LINE)
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as handle:
-        handle.write(LINE)
 
 
 if __name__ == "__main__":
